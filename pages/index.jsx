@@ -3,18 +3,19 @@ import styles from '@/styles/Home.module.css'
 import Button from '../components/Button'
 import PostSmall from '../components/PostSmall'
 import { prisma } from '../server/db/client'
-import handler from './api/posts/deletePost'
+// import handler from './api/posts/deletePost'
 // import SiteNavigation from '@/components/SiteNavigation'
 
 
 import { useRouter } from 'next/router'
 
-export async function deletePostSmallById(id) {
-  const deletedPost = await prisma.post.delete({
-    where: { id: Number(id) },
-  })
-  console.log(deletedPost)
- }
+
+// export async function deletePostSmallById(id) {
+//   const deletedPost = await prisma.post.delete({
+//     where: { id: Number(id) },
+//   })
+//   console.log(deletedPost)
+//  }
 
 
 export default function Home({ posts }) {
@@ -48,7 +49,7 @@ export default function Home({ posts }) {
                    onLike={() => console.log("like post", post.id)}
                    onComment={() => console.log("comment post", post.id)}
                    onShare={() => console.log("share post", post.id)}
-                   onDelete={() => deletePostSmallById(post.id)}
+                  //  onDelete={() => deletePostSmallById(post.id)}
                   // onDelete={() => handler(post.id)}
                    >
                   </PostSmall>

@@ -1,11 +1,16 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "Post" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "totalLikes" INTEGER NOT NULL DEFAULT 0,
+    "totalComments" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT NOT NULL,
 
-  - Added the required column `userId` to the `Post` table without a default value. This is not possible if the table is not empty.
-
-*/
--- AlterTable
-ALTER TABLE "Post" ADD COLUMN     "userId" TEXT NOT NULL;
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Account" (
