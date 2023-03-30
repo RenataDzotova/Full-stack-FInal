@@ -15,7 +15,6 @@ export default function PostSmall({ onLike, onComment, onShare, href, post, user
         <Link
           href={href}
         >
-          {/* <a> */}
             <div>
               <div>
                 {user?.image &&
@@ -34,21 +33,16 @@ export default function PostSmall({ onLike, onComment, onShare, href, post, user
                   </p>
                 </div>
                 <div>
-                  <p>
+                  <p style={{fontWeight:'bold', fontSize:'30px'}}>
                     {post.title.substring(0, 50)}
                   </p>
 
                 </div>
               </div>
             </div>
-            <pre>
-              {post.language ?
-                <code className={`language-${post.language}`} dangerouslySetInnerHTML={{ __html: highlight(post.code, post.language) }} ></code>
-                :
-                <code>{post.code}</code>
-              }
-            </pre>
-          {/* </a> */}
+
+                <div>{post.code}</div>
+
         </Link>
       </div>
       <div>

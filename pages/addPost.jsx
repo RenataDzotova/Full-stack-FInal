@@ -33,10 +33,10 @@ export default function Profile({ user }) {
   return (
     <>
       <Head>
-        <title>Create a Snippet</title>
+        <title>Post A Movie Review</title>
       </Head>
       <div>
-        <h1>Create a Snippet</h1>
+        <h1>Post A Movie Review</h1>
 
         <div>
           <NewPostForm onSubmit={handleSubmit} />

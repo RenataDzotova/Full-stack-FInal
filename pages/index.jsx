@@ -1,24 +1,29 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Button from '../components/Button'
 import PostSmall from '../components/PostSmall'
 import { prisma } from '../server/db/client'
+import handler from './api/posts/deletePost'
+// import SiteNavigation from '@/components/SiteNavigation'
 
 
 import { useRouter } from 'next/router'
 
-const inter = Inter({ subsets: ['latin'] })
+export async function deletePostSmallById(id) {
+  const deletedPost = await prisma.post.delete({
+    where: { id: Number(id) },
+  })
+  console.log(deletedPost)
+ }
+
 
 export default function Home({ posts }) {
 
   const router = useRouter();
 
   //post: {id, title, code, language, totalLikes, totalComments, creratedAt}
-  // const post = [];                                      
+  // const post = [];      
   
-
   return (
     <>
       <Head>
@@ -29,24 +34,27 @@ export default function Home({ posts }) {
       </Head>
       <main className={styles.main}>
         <div>
+
           <Button onClick={() => router.push('/addPost')}>
             Post A New Movie
           </Button>
 
-          <ul>
+          <div style={{width:'600px', height:'fit-content'}}>
             {posts?.map(post => (
-              <li key={post.id}>
+              <div key={post.id}>
                   <PostSmall
                    post={post}
                    href={`/code/${post.id}`}
                    onLike={() => console.log("like post", post.id)}
                    onComment={() => console.log("comment post", post.id)}
                    onShare={() => console.log("share post", post.id)}
+                   onDelete={() => deletePostSmallById(post.id)}
+                  // onDelete={() => handler(post.id)}
                    >
                   </PostSmall>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
 
         </div>
       </main>
