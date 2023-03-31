@@ -11,14 +11,15 @@ export default function Profile({ user }) {
   const router = useRouter()
 
 
-  const handleSubmit = async ({ category, code, title }) => {
+  const handleSubmit = ({ category, code, title }) => {
     try {
-      const { data } = await axios.post('/api/posts', {
+      axios.post('/api/posts', {
         category,
         code,
         title
-      })
-      console.log(data)
+      }).then((res) => {
+      router.push('/')
+    })
     } catch (error) {
       console.error(error)
     }

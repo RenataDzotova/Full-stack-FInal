@@ -1,30 +1,62 @@
-import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
-import Button from '../components/Button'
-import PostSmall from '../components/PostSmall'
-import { prisma } from '../server/db/client'
-// import handler from './api/posts/deletePost'
-// import SiteNavigation from '@/components/SiteNavigation'
+import Head from "next/head";
+import styles from "@/styles/Home.module.css";
+import Button from "../components/Button";
+import PostSmall from "../components/PostSmall";
+import { prisma } from "../server/db/client";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 
-import { useRouter } from 'next/router'
-
-
-// export async function deletePostSmallById(id) {
-//   const deletedPost = await prisma.post.delete({
-//     where: { id: Number(id) },
-//   })
-//   console.log(deletedPost)
-//  }
-
-
-export default function Home({ posts }) {
-
+export default function Home({}) {
   const router = useRouter();
+  const [postss, setPostss] = useState([]);
 
-  //post: {id, title, code, language, totalLikes, totalComments, creratedAt}
-  // const post = [];      
+
+  useEffect(() => {
+    fetch("/api/posts").then((res) => {
+      res.json().then((postsFromServer) => 
+      {
+        setPostss(postsFromServer)
+      });
+      
+    });}, [postss.length]);
+
+
+
+  async function handleDeletePost(id) {
+    const res = await fetch(`/api/posts/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.status === 200) {
+      // Reload the page to update the post list
+      window.location.reload();
+    } else {
+      console.error(`Failed to delete post with ID ${id}: ${res.statusText}`);
+    }
+  }
+  function onDelete(id) {
+    handleDeletePost(id);
+  }
+
   
+  async function handleUpdatePost(id) {
+    const res = await fetch(`/api/posts/${id}`, {
+      method: "PUT",
+    });
+  
+    if (res.status === 200) {
+      // Reload the page to update the post list
+      window.location.reload();
+    } else {
+      console.error(`Failed to update post with ID ${id}: ${res.statusText}`);
+    }
+  }
+  function onUpdate(id) {
+    handleUpdatePost(id);
+  }
+
+
   return (
     <>
       <Head>
@@ -35,32 +67,29 @@ export default function Home({ posts }) {
       </Head>
       <main className={styles.main}>
         <div>
-
-          <Button onClick={() => router.push('/addPost')}>
+          <Button onClick={() => router.push("/addPost")}>
             Post A New Movie
           </Button>
 
-          <div style={{width:'600px', height:'fit-content'}}>
-            {posts?.map(post => (
+          <div style={{ width: "600px", height: "fit-content" }}>
+            {postss?.map((post) => (
               <div key={post.id}>
-                  <PostSmall
-                   post={post}
-                   href={`/code/${post.id}`}
-                   onLike={() => console.log("like post", post.id)}
-                   onComment={() => console.log("comment post", post.id)}
-                   onShare={() => console.log("share post", post.id)}
-                  //  onDelete={() => deletePostSmallById(post.id)}
-                  // onDelete={() => handler(post.id)}
-                   >
-                  </PostSmall>
+                <PostSmall
+                  post={post}
+                  href={`/code/${post.id}`}
+                  onLike={() => console.log("like post", post.id)}
+                  onComment={() => console.log("comment post", post.id)}
+                  onShare={() => console.log("share post", post.id)}
+                  onDelete={() => onDelete(post.id)}
+                  onUpdate={() => onUpdate(post.id)}
+                ></PostSmall>
               </div>
             ))}
           </div>
-
         </div>
       </main>
     </>
-  )
+  );
 }
 
 export async function getServerSideProps() {
@@ -68,13 +97,13 @@ export async function getServerSideProps() {
   //newest first
   const posts = await prisma.post.findMany({
     orderBy: {
-      createdAt: 'desc',
+      createdAt: "desc",
     },
-  })
+  });
 
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
     },
-  }
+  };
 }

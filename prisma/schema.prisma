@@ -12,34 +12,30 @@ datasource db {
 
 //{id, title, code, category, totalLikes, totalComments, creratedAt}
 model Post {
-  id          Int      @id @default(autoincrement())
-  title       String
-  code        String   @db.Text
-  category    String
-  totalLikes  Int      @default(0)
-  totalComments Int    @default(0)
-  createdAt   DateTime @default(now())
-  userId      String
-  user       User     @relation(fields: [userId], references: [id])
+  id            Int      @id @default(autoincrement())
+  title         String
+  code          String   @db.Text
+  category      String
+  totalLikes    Int      @default(0)
+  totalComments Int      @default(0)
+  createdAt     DateTime @default(now())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
 }
 
-
-
-
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
