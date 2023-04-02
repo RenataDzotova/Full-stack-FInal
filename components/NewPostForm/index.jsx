@@ -1,6 +1,8 @@
 import { redirect } from "next/dist/server/api-utils"
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { Textarea } from '@nextui-org/react';
+import { Input } from '@nextui-org/react';
 
 import SimpleCodeEditor from "../../components/SimpleCodeEditor"
 import Button from "../Button"
@@ -48,9 +50,7 @@ export default function NewPostForm({ defaultTitle="no title", defaultCategory="
     <form onSubmit={handleSubmit} className={"mt-8 space-y-6 " + className} action="#" method="POST">
       <input type="hidden" name="remember" value="true" />
       <div className="rounded-md shadow-sm -space-y-px">
-        <div>
-
-          
+        <div  style={{ display:'flex', flexDirection:'column'}}>
           <label htmlFor="movie-genres-dropdown">Select a genre:</label>
           <select
             id="movie-genres-dropdown"
@@ -63,10 +63,17 @@ export default function NewPostForm({ defaultTitle="no title", defaultCategory="
               </option>
             ))}
           </select>
-          
-          <input name="title" onChange={e => handleTitleChange(e.target.value)} language={title}/>
 
-          <input name="code" onChange={e => handleChange(e.target.value)} language={category}/>
+
+
+          <Input labelPlaceholder="Movie Title" onChange={e => handleTitleChange(e.target.value)} language={title}/>
+
+          <Textarea
+          bordered
+          color="gray"
+          labelPlaceholder="Review"
+          onChange={e => handleChange(e.target.value)} language={category}
+        />
 
           <Button
             type="submit"

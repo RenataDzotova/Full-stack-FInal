@@ -5,8 +5,11 @@ import { Navbar, Button, Link, Text, Card, Radio } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.js";
 import { Avatar } from "@nextui-org/react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function index() {
+
+  const router = useRouter();
   const { data: session } = useSession();
 
   const [variant, setVariant] = React.useState("static");
@@ -14,6 +17,8 @@ export default function index() {
 
   const [btnText, setBtnText] = useState("Sign In");
   const [signOutBtnText, setSignOutBtnText] = useState("Sign Out");
+
+  
 
   return (
     <>
@@ -25,8 +30,7 @@ export default function index() {
           </Text> */}
         </Navbar.Brand>
         <Navbar.Content hideIn="xs">
-          {/* <Navbar.Link href="#">Features</Navbar.Link>
-          <Navbar.Link isActive href="#">Customers</Navbar.Link>
+          {/* <Navbar.Link isActive href="#">Customers</Navbar.Link>
           <Navbar.Link href="#">Pricing</Navbar.Link>
           <Navbar.Link href="#">Company</Navbar.Link> */}
         </Navbar.Content>
@@ -34,7 +38,14 @@ export default function index() {
           <Navbar.Item>
             {session ? (
               <>
-                
+                <Button 
+                  color="#d9d9d9"
+                  onClick={()=> router.push('/addPost')}
+                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                  auto
+                  style={{marginRight:'15px', color:'#0072f5'}}
+                  >Post A New Review
+                  </Button> 
                 <Button
                   color="primary"
                   onClick={() => signOut()}

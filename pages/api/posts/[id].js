@@ -33,22 +33,20 @@ export default async function handler(req, res) {
       res.status(200).json(deletedPost);
       break;
 
-
     case "PUT":
-        const { category, code, title } = req.body;
-        const updatedPost = await prisma.post.update({
+      const { category, code, title } = req.body;
+      const updatedPost = await prisma.post.update({
         where: {
-            id: parseInt(id),
+          id: parseInt(id),
         },
         data: {
-            category,
-            code,
-            title,
+          category,
+          code,
+          title,
         },
-        });
-        res.status(200).json(updatedPost);
-    break;
-
+      });
+      res.status(200).json(updatedPost);
+      break;
 
     case "GET":
       const post = await prisma.post.findUnique({

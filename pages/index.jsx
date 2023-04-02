@@ -6,22 +6,23 @@ import { prisma } from "../server/db/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-
-export default function Home({}) {
+export default function Home({ posts: _posts }) {
   const router = useRouter();
-  const [postss, setPostss] = useState([]);
-
+  const [posts, setPosts] = useState(_posts);
 
   useEffect(() => {
-    fetch("/api/posts").then((res) => {
-      res.json().then((postsFromServer) => 
-      {
-        setPostss(postsFromServer)
-      });
-      
-    });}, [postss.length]);
+    setPosts(_posts);
+  }, [_posts]);
 
+  const postsByCategory = {};
 
+  posts.forEach((post) => {
+    if (postsByCategory[post.category]) {
+      postsByCategory[post.category].push(post);
+    } else {
+      postsByCategory[post.category] = [post];
+    }
+  });
 
   async function handleDeletePost(id) {
     const res = await fetch(`/api/posts/${id}`, {
@@ -29,8 +30,7 @@ export default function Home({}) {
     });
 
     if (res.status === 200) {
-      // Reload the page to update the post list
-      window.location.reload();
+      setPosts(posts.filter((post) => post.id !== id));
     } else {
       console.error(`Failed to delete post with ID ${id}: ${res.statusText}`);
     }
@@ -39,23 +39,27 @@ export default function Home({}) {
     handleDeletePost(id);
   }
 
-  
-  async function handleUpdatePost(id) {
+  async function handleUpdatePost(id, title) {
+    console.log(id, title);
     const res = await fetch(`/api/posts/${id}`, {
       method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title }),
     });
-  
+
     if (res.status === 200) {
-      // Reload the page to update the post list
-      window.location.reload();
+      setPosts(
+        posts.map((post) => (post.id === id ? { ...post, title } : post))
+      );
     } else {
       console.error(`Failed to update post with ID ${id}: ${res.statusText}`);
     }
   }
-  function onUpdate(id) {
-    handleUpdatePost(id);
+  function onUpdate(id, title) {
+    handleUpdatePost(id, title);
   }
-
 
   return (
     <>
@@ -65,26 +69,55 @@ export default function Home({}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div>
-          <Button onClick={() => router.push("/addPost")}>
+      <main style={{ padding: "60px" }}>
+        <div style={{ display: "flex", width: "100%" }}>
+          {/* <Button onClick={() => router.push("/addPost")}>
             Post A New Movie
-          </Button>
+          </Button> */}
 
-          <div style={{ width: "600px", height: "fit-content" }}>
-            {postss?.map((post) => (
-              <div key={post.id}>
-                <PostSmall
-                  post={post}
-                  href={`/code/${post.id}`}
-                  onLike={() => console.log("like post", post.id)}
-                  onComment={() => console.log("comment post", post.id)}
-                  onShare={() => console.log("share post", post.id)}
-                  onDelete={() => onDelete(post.id)}
-                  onUpdate={() => onUpdate(post.id)}
-                ></PostSmall>
-              </div>
-            ))}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            {postsByCategory &&
+              Object.keys(postsByCategory).map((category) => (
+                <>
+                <h1>{category}</h1>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "20px",
+                  }}
+                >
+                  {postsByCategory[category].map((post) => (
+                    // {posts?.map((post) => (
+                    <div style={{ width: "600px" }} key={post.id}>
+                      <PostSmall
+                        post={post}
+                        // user={{
+                        //   image:
+                        // }}
+                        href={`/code/${post.id}`}
+                        onLike={() => console.log("like post", post.id)}
+                        onComment={() => console.log("comment post", post.id)}
+                        onShare={() => console.log("share post", post.id)}
+                        onDelete={() => onDelete(post.id)}
+                        onUpdate={({ title }) => onUpdate(post.id, title)}
+                      ></PostSmall>
+                    </div>
+                  ))}
+                </div>
+                </>
+              ))}
           </div>
         </div>
       </main>

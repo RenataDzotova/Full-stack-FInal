@@ -36,14 +36,15 @@ export default function Profile({ user }) {
       <Head>
         <title>Post A Movie Review</title>
       </Head>
-      <div>
-        <h1>Post A Movie Review</h1>
 
-        <div>
-          <NewPostForm onSubmit={handleSubmit} />
+        <main style={{padding:'60px'}}>
+        <div style={{width:'100%', display:'flex', justifyContent:'center', flexDirection:'column'}}>
+          <h1>Post A Movie Review</h1>
+          <div>
+            <NewPostForm onSubmit={handleSubmit} />
+          </div>
         </div>
-
-      </div>
+        </main>
     </>
   )
 }

@@ -5,20 +5,21 @@ import PostActions from "../PostActions";
 
 import formatTimeAgo from "../../utils/formatTimeAgo";
 import highlight from "../../utils/highlight";
+import { useState } from "react";
 
 export default function PostSmall({
-  onLike,
-  onComment,
-  onShare,
+  onLike = () => {},
+  onComment = () => {},
+  onShare = () => {},
+  onDelete = () => {},
+  onUpdate = () => {},
+  className = "",
   href,
   post,
   user,
-  className = "",
-  onDelete = () => {},
-  onUpdate = () => {},
 }) {
   return (
-    <div>
+    <div style={{backgroundColor:'white', margin:'30px', padding:'50px', borderRadius:'10px', minHeight: "400px"}}>
       <div>
         <Link href={href}>
           <div>
@@ -45,13 +46,13 @@ export default function PostSmall({
       <div>
         <PostActions
           onComment={onComment}
+          onDelete={onDelete}
           onLike={onLike}
           onShare={onShare}
+          onUpdate={onUpdate}
           liked={post.liked}
           totalComments={post.totalComments}
           totalLikes={post.totalLikes}
-          onDelete={onDelete}
-          onUpdate={onUpdate}
         />
       </div>
     </div>

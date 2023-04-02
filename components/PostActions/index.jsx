@@ -10,44 +10,36 @@ import {
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 
 export default function PostActions({
+  onComment = () => {},
   onDelete = () => {},
-  onUpdate = (e) => {
-    e.preventDefault()
-    onSubmit({ code, category, title })
-  },
-  onComment,
-  onLike,
-  onShare,
-  totalLikes,
-  totalComments,
-  liked,
+  onLike = () => {},
+  onShare = () => {},
+  onUpdate = () => {},
   className = "",
-  defaultTitle="no title",
+  defaultTitle = "",
+  liked,
+  totalComments,
+  totalLikes,
 }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [title, setTitle] = useState(defaultTitle);
-
-  const handleTitleChange = (value) => {
-    setTitle(value)
-  };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   onSubmit({ code, category, title })
-  // }
 
   return (
     <div className={"flex items-center justify-between " + className}>
       <button
         style={{ width: "30px", height: "fit-content" }}
-        onClick={onComment}
+        onClick={(e) => {
+          onComment();
+        }}
       >
         <span>{totalComments}</span>
         <CommentIcon className="h-7 w-7" aria-hidden="true" />
       </button>
-      <button
+      {/* <button
         style={{ width: "30px", height: "fit-content" }}
-        onClick={onLike}
+        onClick={(e) => {
+          onLike();
+        }}
       >
         <span>{totalLikes}</span>
         {!liked ? (
@@ -55,16 +47,29 @@ export default function PostActions({
         ) : (
           <HeartIconSolid className="h-7 w-7" aria-hidden="true" />
         )}
-      </button>
-
-      <button onClick={onDelete} disabled={isDeleting}>
+      </button> */}
+      <button
+        disabled={isDeleting}
+        onClick={(e) => {
+          setIsDeleting(true);
+          onDelete();
+        }}
+      >
         {isDeleting ? "Deleting..." : "Delete"}
       </button>
-
-      <button onClick={onUpdate}>
+      <button
+        onClick={(e) => {
+          onUpdate({ title });
+        }}
+      >
         Update
       </button>
-      <input name="title" onChange={e => handleTitleChange(e.target.value)}/>
+      <input
+        name="title"
+        onChange={(e) => {
+          setTitle(e.target.value);
+        }}
+      />
     </div>
   );
 }
