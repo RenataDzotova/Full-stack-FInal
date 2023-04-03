@@ -3,8 +3,6 @@ import Image from "next/image";
 
 import PostActions from "../PostActions";
 
-import formatTimeAgo from "../../utils/formatTimeAgo";
-import highlight from "../../utils/highlight";
 import { useState } from "react";
 
 export default function PostSmall({

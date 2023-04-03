@@ -24,7 +24,7 @@ export default function index() {
     <>
       <Navbar isBordered variant="floating">
         <Navbar.Brand>
-          <AcmeLogo />
+          <AcmeLogo onClick={()=> router.push('/')}/>
           {/* <Text b color="inherit" hideIn="xs">
             ACME
           </Text> */}
