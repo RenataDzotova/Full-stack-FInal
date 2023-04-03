@@ -23,6 +23,7 @@ export default function PostActions({
 }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [title, setTitle] = useState(defaultTitle);
+  const [showInput, setShowInput] = useState(false);
 
   return (
     <div className={"flex items-center justify-between " + className}>
@@ -32,7 +33,7 @@ export default function PostActions({
           onComment();
         }}
       >
-        <span>{totalComments}</span>
+        {/* <span>{totalComments}</span> */}
         <CommentIcon className="h-7 w-7" aria-hidden="true" />
       </button>
       {/* <button
@@ -59,17 +60,20 @@ export default function PostActions({
       </button>
       <button
         onClick={(e) => {
+          setShowInput(true);
           onUpdate({ title });
         }}
       >
         Update
       </button>
+      {showInput && 
       <input
         name="title"
         onChange={(e) => {
           setTitle(e.target.value);
         }}
       />
+      }
     </div>
   );
 }

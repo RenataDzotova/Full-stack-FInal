@@ -17,12 +17,12 @@ export default function Home({ posts: _posts }) {
   const postsByCategory = {};
 
   posts.forEach((post) => {
-    if (postsByCategory[post.category]) {
-      postsByCategory[post.category].push(post);
-    } else {
-      postsByCategory[post.category] = [post];
-    }
-  });
+  if (postsByCategory[post.category]) {
+    postsByCategory[post.category].push(post);
+  } else {
+    postsByCategory[post.category] = [post];
+  }
+});
 
   async function handleDeletePost(id) {
     const res = await fetch(`/api/posts/${id}`, {
@@ -96,6 +96,7 @@ export default function Home({ posts: _posts }) {
                     alignItems: "center",
                     justifyContent: "center",
                     margin: "20px",
+                    alignItems: "flex-start"
                   }}
                 >
                   {postsByCategory[category].map((post) => (
