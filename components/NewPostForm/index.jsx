@@ -50,9 +50,8 @@ export default function NewPostForm({ defaultTitle="no title", defaultCategory="
     <form onSubmit={handleSubmit} className={"mt-8 space-y-6 " + className} action="#" method="POST">
       <input type="hidden" name="remember" value="true" />
       <div className="rounded-md shadow-sm -space-y-px">
-        <div  style={{ display:'flex', flexDirection:'column'}}>
-          <label htmlFor="movie-genres-dropdown">Select a genre:</label>
-          <select
+        <div style={{ display:'flex', flexDirection:'column', height:'350px', justifyContent:'space-around'}}>
+          <select style={{ display:'flex', height:'40px', borderRadius:'15px', border:'1px solid #e2e8f0', padding:'0 10px 0 10px', color:'grey', fontSize:'14px', border:'2px solid rgb(200 200 200)'}}
             id="movie-genres-dropdown"
             value={category}
             onChange={handleCategoryChange}
@@ -66,7 +65,11 @@ export default function NewPostForm({ defaultTitle="no title", defaultCategory="
 
 
 
-          <Input labelPlaceholder="Movie Title" onChange={e => handleTitleChange(e.target.value)} language={title}/>
+          <Input 
+          bordered 
+          labelPlaceholder="Movie Title" 
+          onChange={e => handleTitleChange(e.target.value)} 
+          color="default" />
 
           <Textarea
           bordered
@@ -77,8 +80,9 @@ export default function NewPostForm({ defaultTitle="no title", defaultCategory="
 
           <Button
             type="submit"
+            style={{borderRadius:'15px', border:'1px solid #e2e8f0', padding:'10px', color:'#ffffff', fontSize:'18px', border:'2px solid rgb(200 200 200)', fontWeight:'bold', backgroundColor:'#0072f5'}}
           >
-            Push!
+            Post a Review
           </Button>
         </div>
       </div>

@@ -17,12 +17,12 @@ export default function Home({ posts: _posts }) {
   const postsByCategory = {};
 
   posts.forEach((post) => {
-  if (postsByCategory[post.category]) {
-    postsByCategory[post.category].push(post);
-  } else {
-    postsByCategory[post.category] = [post];
-  }
-});
+    if (postsByCategory[post.category]) {
+      postsByCategory[post.category].push(post);
+    } else {
+      postsByCategory[post.category] = [post];
+    }
+  });
 
   async function handleDeletePost(id) {
     const res = await fetch(`/api/posts/${id}`, {
@@ -35,6 +35,7 @@ export default function Home({ posts: _posts }) {
       console.error(`Failed to delete post with ID ${id}: ${res.statusText}`);
     }
   }
+
   function onDelete(id) {
     handleDeletePost(id);
   }
@@ -57,6 +58,7 @@ export default function Home({ posts: _posts }) {
       console.error(`Failed to update post with ID ${id}: ${res.statusText}`);
     }
   }
+
   function onUpdate(id, title) {
     handleUpdatePost(id, title);
   }
@@ -69,7 +71,7 @@ export default function Home({ posts: _posts }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{ padding: "60px" }}>
+      <main style={{ padding: "60px", backgroundColor: "white" }}>
         <div style={{ display: "flex", width: "100%" }}>
           {/* <Button onClick={() => router.push("/addPost")}>
             Post A New Movie
@@ -87,36 +89,34 @@ export default function Home({ posts: _posts }) {
             {postsByCategory &&
               Object.keys(postsByCategory).map((category) => (
                 <>
-                <h1>{category}</h1>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "20px",
-                    alignItems: "flex-start"
-                  }}
-                >
-                  {postsByCategory[category].map((post) => (
-                    // {posts?.map((post) => (
-                    <div style={{ width: "600px" }} key={post.id}>
-                      <PostSmall
-                        post={post}
-                        // user={{
-                        //   image:
-                        // }}
-                        href={`/code/${post.id}`}
-                        onLike={() => console.log("like post", post.id)}
-                        onComment={() => console.log("comment post", post.id)}
-                        onShare={() => console.log("share post", post.id)}
-                        onDelete={() => onDelete(post.id)}
-                        onUpdate={({ title }) => onUpdate(post.id, title)}
-                      ></PostSmall>
-                    </div>
-                  ))}
-                </div>
+                  <h1>{category}</h1>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "20px",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {postsByCategory[category].map((post) => (
+                      <div style={{ width: "600px" }} key={post.id}>
+                        <PostSmall
+                          post={post}
+                          // user={{
+                          //   image:
+                          // }}
+                          href={`/code/${post.id}`}
+                          onComment={() => console.log("comment post", post.id)}
+                          onShare={() => console.log("share post", post.id)}
+                          onDelete={() => onDelete(post.id)}
+                          onUpdate={({ title }) => onUpdate(post.id, title)}
+                        ></PostSmall>
+                      </div>
+                    ))}
+                  </div>
                 </>
               ))}
           </div>

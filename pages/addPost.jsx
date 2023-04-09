@@ -37,8 +37,8 @@ export default function Profile({ user }) {
         <title>Post A Movie Review</title>
       </Head>
 
-        <main style={{padding:'60px'}}>
-        <div style={{width:'100%', display:'flex', justifyContent:'center', flexDirection:'column'}}>
+        <main style={{padding:'60px', display:'flex', justifyContent:'center', backgroundColor:'white'}}>
+        <div style={{width:'700px', height:'600px', display:'flex', justifyContent:'center', flexDirection:'column'}}>
           <h1>Post A Movie Review</h1>
           <div>
             <NewPostForm onSubmit={handleSubmit} />
