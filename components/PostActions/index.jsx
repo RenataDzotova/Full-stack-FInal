@@ -27,7 +27,7 @@ export default function PostActions({
 
   return (
     <div className={"flex items-center justify-between " + className}
-    style={{width:'230px', display:'flex', justifyContent:'space-between', marginTop:'20px'}}>
+    style={{minWidth:'250px', width:'fit-content', display:'flex', justifyContent:'space-between', marginTop:'20px'}}>
 
       <button
         disabled={isDeleting}
@@ -56,6 +56,19 @@ export default function PostActions({
         }}
       />
       }
+      <button
+          style={{ width: "40px", height: "30px", display:'flex', alignItems:'center', justifyContent:'center', backgroundColor:'white', borderRadius:'7px', border:'gray 1px solid', padding:'3px 5px 3px 5px' }}
+          onClick={(e) => {
+              onLike();
+          }}
+      >
+          <span>{totalLikes}</span>
+          {!liked ? (
+              <HeartIcon className="h-7 w-7" aria-hidden="true" />
+          ) : (
+              <HeartIconSolid className="h-7 w-7" aria-hidden="true" />
+          )}
+      </button>
     </div>
   );
 }
