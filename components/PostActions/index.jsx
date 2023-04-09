@@ -26,35 +26,16 @@ export default function PostActions({
   const [showInput, setShowInput] = useState(false);
 
   return (
-    <div className={"flex items-center justify-between " + className}>
-      <button
-        style={{ width: "30px", height: "fit-content" }}
-        onClick={(e) => {
-          onComment();
-        }}
-      >
-        {/* <span>{totalComments}</span> */}
-        <CommentIcon className="h-7 w-7" aria-hidden="true" />
-      </button>
-      {/* <button
-        style={{ width: "30px", height: "fit-content" }}
-        onClick={(e) => {
-          onLike();
-        }}
-      >
-        <span>{totalLikes}</span>
-        {!liked ? (
-          <HeartIcon className="h-7 w-7" aria-hidden="true" />
-        ) : (
-          <HeartIconSolid className="h-7 w-7" aria-hidden="true" />
-        )}
-      </button> */}
+    <div className={"flex items-center justify-between " + className}
+    style={{width:'230px', display:'flex', justifyContent:'space-between', marginTop:'20px'}}>
+
       <button
         disabled={isDeleting}
         onClick={(e) => {
           setIsDeleting(true);
           onDelete();
         }}
+        style={{width:'100px', height:'30px', backgroundColor:'black', color:'white', borderRadius:'5px', border:'none'}}
       >
         {isDeleting ? "Deleting..." : "Delete"}
       </button>
@@ -63,6 +44,7 @@ export default function PostActions({
           setShowInput(true);
           onUpdate({ title });
         }}
+        style={{width:'100px', height:'30px', backgroundColor:'#7c7c7c', color:'white', borderRadius:'5px', border:'none'}}
       >
         Update
       </button>

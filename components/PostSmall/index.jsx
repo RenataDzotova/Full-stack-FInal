@@ -17,7 +17,7 @@ export default function PostSmall({
   user,
 }) {
   return (
-    <div style={{backgroundColor:'white', margin:'30px', padding:'50px', borderRadius:'10px', minHeight: "400px"}}>
+    <div style={{backgroundColor:'white', margin:'30px', padding:'50px', borderRadius:'10px', minHeight: "400px", border:'1px gray solid'}}>
       <div>
         <Link href={href}>
           <div>

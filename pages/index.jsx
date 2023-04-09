@@ -69,7 +69,7 @@ export default function Home({ posts: _posts }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{ padding: "60px" }}>
+      <main style={{ padding: "60px", backgroundColor:'white' }}>
         <div style={{ display: "flex", width: "100%" }}>
           {/* <Button onClick={() => router.push("/addPost")}>
             Post A New Movie

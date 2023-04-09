@@ -22,9 +22,9 @@ export default function index() {
 
   return (
     <>
-      <Navbar isBordered variant="floating">
-        <Navbar.Brand>
-          <AcmeLogo onClick={()=> router.push('/')}/>
+      <Navbar isBordered variant="floating" style={{backgroundColor:'white'}}>
+        <Navbar.Brand onClick={()=> router.push('/')}>
+          <AcmeLogo />
           {/* <Text b color="inherit" hideIn="xs">
             ACME
           </Text> */}
